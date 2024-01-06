@@ -11,16 +11,8 @@ const DB = process.env.MONGO_URI;
 
 
 
-// CORS options
-const corsOptions = {
-    origin: 'http://localhost:5173', // Only allow requests from this origin
-    optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
-    credentials: true, // Allow sending cookies
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-};
-
 // Middlewares
-app.use(cors(corsOptions));
+app.use(cors({origin: 'http://localhost:5173'}));
 app.use(express.json());
 app.use(express.json());
 
