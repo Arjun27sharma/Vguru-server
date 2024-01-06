@@ -10,7 +10,7 @@ app.set('port', process.env.PORT || 5000);
 const DB = process.env.MONGO_URI;
 
 
-const allowedOrigins = ["http://localhost:5173", "http://localhost:3000"]; // Add your actual allowed origins
+const allowedOrigins = ["http://localhost:5173", "http://localhost:3000", "https://vguru6622.vercel.app"]; // Add your actual allowed origins
 
 app.use(cors({
   origin: function (origin, callback) {
