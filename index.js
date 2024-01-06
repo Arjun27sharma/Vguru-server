@@ -10,9 +10,22 @@ app.set('port', process.env.PORT || 5000);
 const DB = process.env.MONGO_URI;
 
 
+const allowedOrigins = ["http://localhost:5173", "http://localhost:3000"]; // Add your actual allowed origins
 
-// Middlewares
-app.use(cors({origin: 'http://localhost:5173'}));
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true, // If needed for cookies or authentication
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH']
+}));
+
+
 app.use(express.json());
 app.use(express.json());
 
