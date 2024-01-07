@@ -21,7 +21,11 @@ const TestSchema = new mongoose.Schema({
     reviewedBy : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "User"
-    }  
+    },
+    remarks : {
+        type : String,
+        default : "None"
+    }
 }, {
     timestamps : true
 })

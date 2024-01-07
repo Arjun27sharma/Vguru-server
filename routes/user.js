@@ -92,7 +92,16 @@ router.get('/', async (req, res) => {
 
 router.get('/details', verifyToken ,async (req, res) => {
     try {
-        const user = await User.findById(req.user.id).populate('tests');
+        // const user = await User.findById(req.user.id).populate('tests');
+        const user = await User.findById(req.user.id)
+                       .populate({
+                           path: 'tests',
+                           populate: {
+                               path: 'reviewedBy',
+                               model: 'User' // Replace 'User' with the model name used for your users
+                           }
+                       });
+
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }

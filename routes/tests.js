@@ -25,10 +25,33 @@ const verifyToken = (req, res, next) => {
 };
 
 
+router.get("/", async (req, res) => {
+    try {
+        const tests = await Test.find().populate("student");
+        res.json(tests);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+})
+
+router.put("/:id", verifyToken,async (req, res) => {
+    try{
+        const reviewedBy = await User.findById(req.user.id);
+        const test = await Test.findById(req.params.id);
+        const newTest = {...test._doc, ...req.body, reviewedBy : reviewedBy._id};
+        await Test.findByIdAndUpdate(req.params.id, newTest);
+        res.status(200).json({ message: 'Test updated successfully', test: newTest });
+    }
+    catch(error){
+        res.status(500).json({ message: error.message });
+    }
+})
+
+
 router.get("/:studentId", async (req, res) => {
     try {
         const studentId = req.params.studentId;
-        const tests = await Test.find({ student: studentId });
+        const tests = await Test.find({ student: studentId }).populate("reviewedBy");
         res.json(tests);
     } catch (error) {
         res.status(500).json({ message: error.message });

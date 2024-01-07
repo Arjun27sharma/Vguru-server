@@ -4,6 +4,7 @@ const cors = require('cors');
 const app = express();
 require('dotenv').config();
 const userRoutes = require('./routes/user')
+const testRoutes = require('./routes/tests')
 
 // Settings
 app.set('port', process.env.PORT || 5000);
@@ -36,7 +37,7 @@ app.get('/', (req, res) => {
 });
 app.use('/api/users', userRoutes);
 app.use('/api/report', require('./routes/report'));
-app.use('/api/test', require('./routes/test'));
+app.use('/api/test', testRoutes);
 
 // Connect to MongoDB database
 mongoose.connect(DB)
