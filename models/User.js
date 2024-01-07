@@ -19,7 +19,14 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    tests : [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Test'
+        }
+    ],
+    
 });
 
 // Pre-save hook to hash password

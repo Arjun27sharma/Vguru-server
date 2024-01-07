@@ -31,10 +31,12 @@ app.use(express.json());
 
 // Routes
 // TODO: Add your routes here
-app.use('/api/users', userRoutes);
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+  res.send('Hello World!');
 });
+app.use('/api/users', userRoutes);
+app.use('/api/report', require('./routes/report'));
+app.use('/api/test', require('./routes/test'));
 
 // Connect to MongoDB database
 mongoose.connect(DB)
