@@ -4,7 +4,9 @@ const cors = require('cors');
 const app = express();
 require('dotenv').config();
 const userRoutes = require('./routes/user')
-const testRoutes = require('./routes/tests')
+const testRoutes = require('./routes/tests');
+const passport = require('passport');
+require('./auth')
 
 // Settings
 app.set('port', process.env.PORT || 5000);
@@ -33,11 +35,16 @@ app.use(express.json());
 // Routes
 // TODO: Add your routes here
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('<a href="/api/auth/google">Authenticate with google</a>');
 });
+app.get('/api/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
+app.get('/google/callback');
 app.use('/api/users', userRoutes);
+app.use('/api/quiz', require('./routes/quiz'));
 app.use('/api/report', require('./routes/report'));
 app.use('/api/test', testRoutes);
+
+
 
 // Connect to MongoDB database
 mongoose.connect(DB)
